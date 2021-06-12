@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:remoute_app/configs.dart';
+import '../configs.dart';
 
 const ip = remoteIp;
 

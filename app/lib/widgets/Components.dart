@@ -1,9 +1,8 @@
+import 'package:remoute_mouse/logic/key_press.dart';
+import 'package:remoute_mouse/logic/socket_t.dart';
 import 'package:flutter/material.dart';
-import 'package:remoute_app/logic/key_press.dart';
-import 'package:remoute_app/logic/socket_t.dart';
 
 class MyTouchBar extends StatelessWidget {
-
   double x = 0;
   double y = 0;
   double difx = 0;
@@ -15,27 +14,25 @@ class MyTouchBar extends StatelessWidget {
       width: double.infinity,
       height: 450,
       decoration: BoxDecoration(
-        color: Color(0xff8A8E91),
-        borderRadius: BorderRadius.circular(22)
-      ),
-      child:Column(
+          color: Color(0xff8A8E91), borderRadius: BorderRadius.circular(22)),
+      child: Column(
         children: <Widget>[
           Expanded(
             child: GestureDetector(
-              onPanStart: (details){
+              onPanStart: (details) {
                 x = details.globalPosition.dx;
                 y = details.globalPosition.dy;
               },
-              onPanUpdate: (details){
-                difx = x -  details.globalPosition.dx ;
-                dify = y - details.globalPosition.dy ;
+              onPanUpdate: (details) {
+                difx = x - details.globalPosition.dx;
+                dify = y - details.globalPosition.dy;
                 x = details.globalPosition.dx;
                 y = details.globalPosition.dy;
                 //print(difx.toString() + '\n'  + dify.toString() );
                 sendpos(difx.toStringAsFixed(3), dify.toStringAsFixed(3));
               },
-              onPanEnd: (details){
-                x  = 0;
+              onPanEnd: (details) {
+                x = 0;
                 y = 0;
               },
             ),
@@ -50,7 +47,7 @@ class MyTouchBar extends StatelessWidget {
               children: <Widget>[
                 Expanded(
                   child: GestureDetector(
-                    onTap: (){
+                    onTap: () {
                       mouseclick(false);
                     },
                     child: Container(child: Center(child: Text("Left Click"))),
@@ -58,19 +55,24 @@ class MyTouchBar extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 8.0),
-                  child: VerticalDivider(color: Colors.black38,),
+                  child: VerticalDivider(
+                    color: Colors.black38,
+                  ),
                 ),
                 Expanded(
                   child: GestureDetector(
-                    onTap: (){
+                    onTap: () {
                       mouseclick(true);
                     },
-                    child: Container(child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 25,vertical: 15 ),
-                      child: Text("Right Click"),
+                    child: Container(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 25, vertical: 15),
+                        child: Text("Right Click"),
+                      ),
+                      width: double.infinity,
+                      height: double.infinity,
                     ),
-                    width: double.infinity,
-                    height: double.infinity,),
                   ),
                 )
               ],
@@ -82,7 +84,6 @@ class MyTouchBar extends StatelessWidget {
   }
 }
 
-
 class RowOne extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -91,35 +92,36 @@ class RowOne extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           GestureDetector(
-            onTap: (){print("Power Off");
-            sendcomand('esc');
+            onTap: () {
+              print("Power Off");
+              sendcomand('esc');
             }, //for future function
-            onDoubleTap: (){
+            onDoubleTap: () {
               destroy();
             },
             child: Container(
               width: 73,
               height: 56,
-             padding:EdgeInsets.all(15),
-             decoration: BoxDecoration(
-               borderRadius: BorderRadius.all(Radius.circular(13)),
-               color: Color(0xff6D000A),
-             ),
-             child: Center(
-                 child: Text("Esc",
-                   style: TextStyle(
-                     color: Colors.white,
-                     fontSize: 15,
-                   ),
-                 )
-             ),
+              padding: EdgeInsets.all(15),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(13)),
+                color: Color(0xff6D000A),
+              ),
+              child: Center(
+                  child: Text(
+                "Esc",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 15,
+                ),
+              )),
             ),
           ),
           Container(
-            child:Row(
+            child: Row(
               children: <Widget>[
                 GestureDetector(
-                  onTap: (){
+                  onTap: () {
                     sendcomand_combination('open');
                   },
                   child: Container(
@@ -132,10 +134,7 @@ class RowOne extends StatelessWidget {
                     child: Center(
                       child: Text(
                         '+',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 25
-                        ),
+                        style: TextStyle(color: Colors.white, fontSize: 25),
                       ),
                     ),
                   ),
@@ -144,7 +143,7 @@ class RowOne extends StatelessWidget {
                   width: 18,
                 ),
                 GestureDetector(
-                  onTap: (){
+                  onTap: () {
                     sendcomand_combination('close');
                   },
                   child: Container(
@@ -155,8 +154,10 @@ class RowOne extends StatelessWidget {
                     width: 47,
                     height: 43,
                     child: Center(
-                      child: Text('-',
-                      style: TextStyle(color: Colors.white, fontSize: 25),),
+                      child: Text(
+                        '-',
+                        style: TextStyle(color: Colors.white, fontSize: 25),
+                      ),
                     ),
                   ),
                 )
@@ -177,7 +178,7 @@ class RowTwo extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           GestureDetector(
-            onTap: (){
+            onTap: () {
               sendcomand('left');
             },
             child: Container(
@@ -192,9 +193,9 @@ class RowTwo extends StatelessWidget {
                 color: Colors.white,
               ),
             ),
-          ),//left key
+          ), //left key
           GestureDetector(
-            onTap: (){
+            onTap: () {
               sendcomand('space');
             },
             child: Container(
@@ -206,17 +207,16 @@ class RowTwo extends StatelessWidget {
               ),
               child: Center(
                   child: Text(
-                      "Space",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 15,
-                    ),
-                  )
-              ),
+                "Space",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 15,
+                ),
+              )),
             ),
-          ),//space key
+          ), //space key
           GestureDetector(
-            onTap: (){
+            onTap: () {
               sendcomand('right');
             },
             child: Container(
@@ -231,7 +231,7 @@ class RowTwo extends StatelessWidget {
                 color: Colors.white,
               ),
             ),
-          ),//right key
+          ), //right key
         ],
       ),
     );
