@@ -1,0 +1,4 @@
+#Tue Jun 08 22:39:31 EEST 2021
+base.0=/home/its_mario/Downloads/RemoteMousev_2/remoute_app/build/app/intermediates/dex/debug/mergeDexDebug/out/classes.dex
+renamed.0=classes.dex
+path.0=classes.dex
