@@ -1,29 +1,24 @@
-import threading
-from flask import Flask
-from flask import request, jsonify
-from key_process import *
-from sockettest import *
 
-app = Flask(__name__)
-
-@app.route('/press_key/<key>')
-def comand_key(key):
-	press_key(key)
-	return 'Succes'
-
-@app.route('/press_combination/<type>')
-def comand_combination(type):
-	press_combination(type)
-	return 'Succes'
-
-@app.route('/mouseclick/<key>')
-def mouseclick(key):
-	pyautogui.click(button = key)
-	return 'Succes'
+from udp_stream import UDPHost
+import key_processing
+import restAPI
+import json
 	
 
-if __name__ == '__main__':
-	threading.Thread(target=initiate).start()
-	#threading.Thread(target=app.run, kwargs={'debug':True , 'host': '0.0.0.0','port': 5005}).start()
+def proccesing_movement(msg:str):
+    di = json.loads(msg)
+    print("x:{} ,y:{}".format(di['dx'],di['dy']))
+    key_processing.move_mouse(**di)
 
-	app.run(debug = True , host = '0.0.0.0',port = 5005)
+
+if __name__ == '__main__':
+    try:
+        udpHost = UDPHost("0.0.0.0", 20001, proccesing_movement)
+        udpHost.start()
+        # app.run(host = "0.0.0.0", port = 5001, debug= False)
+        restAPI.start_server()
+    except KeyboardInterrupt:
+        print("shutting down ...")
+        udpHost.exit = True
+        udpHost.join()
+        restAPI.stop_server()

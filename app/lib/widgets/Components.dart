@@ -1,12 +1,15 @@
 import 'package:remoute_mouse/logic/key_press.dart';
-import 'package:remoute_mouse/logic/socket_t.dart';
+// import 'package:remoute_mouse/logic/socket_t.dart';
 import 'package:flutter/material.dart';
+import 'package:remoute_mouse/logic/udpClient.dart';
 
 class MyTouchBar extends StatelessWidget {
   double x = 0;
   double y = 0;
   double difx = 0;
   double dify = 0;
+
+  var udpCo = UDPConnection(host: '192.168.1.9', port: 20001);
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +32,7 @@ class MyTouchBar extends StatelessWidget {
                 x = details.globalPosition.dx;
                 y = details.globalPosition.dy;
                 //print(difx.toString() + '\n'  + dify.toString() );
-                sendpos(difx.toStringAsFixed(3), dify.toStringAsFixed(3));
+                udpCo.sendPos(difx, dify);
               },
               onPanEnd: (details) {
                 x = 0;
@@ -97,7 +100,7 @@ class RowOne extends StatelessWidget {
               sendcomand('esc');
             }, //for future function
             onDoubleTap: () {
-              destroy();
+              //destroy();
             },
             child: Container(
               width: 73,
