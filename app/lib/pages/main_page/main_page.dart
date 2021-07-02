@@ -31,7 +31,8 @@ class _MainPageState extends State<MainPage> {
           future: scan(),
           initialData: ["192.168.1.10"],
           builder: (BuildContext context, AsyncSnapshot snapshot) {
-            controller = Controller(ip: snapshot.data.first);
+            
+            controller = Controller(ip: snapshot.data.first ?? "192.168.1.10");
             return Container(
               margin: EdgeInsets.only(
                 left: 35,
